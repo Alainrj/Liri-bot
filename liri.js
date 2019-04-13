@@ -12,7 +12,9 @@ var spotify = new Spotify({
 // var defaultSong = require("The Sign");
 var defaultMovie = "Mr. Nobody";
 // var spotify = new Spotify(keys.spotify);
+
 // <---------------------------------------------------->
+
 /**
  * Name of the venue
 Venue location
@@ -20,6 +22,7 @@ Date of the Event (use moment to format this as "MM/DD/YYYY")
  */
 var action = process.argv[2];
 var value = process.argv[3];
+
 switch (action) {
   case "concert-this":
     getBands(value)
@@ -44,7 +47,10 @@ switch (action) {
   default:
     break;
 }
+
 // <---------------------------------------------------->
+
+
 function getBands(artist) {
   // var artist = value;
   axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
@@ -58,21 +64,29 @@ function getBands(artist) {
       console.log(error);
     });
 }
+
 // <---------------------------------------------------->
+
+
 function getSongs(songName) {
   // var songName = value;
+
   //If user has not specified a song , default to "The Sign" by Ace of Bass
   if (songName === "") {
     songName = "I Saw the Sign";
   }
+
   spotify.search({ type: 'track', query: songName }, function (err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
     // else {
     //   console.log("Not right now. Later?")
+
     // console.log(JSON.stringify(data)); 
+
     // The song's name
+
     //Artist(s)
     console.log("Artists: ", data.tracks.items[0].album.artists[0].name)
     // A preview link of the song from Spotify
@@ -82,6 +96,7 @@ function getSongs(songName) {
   });
 }
 // <---------------------------------------------------->
+
 function movieThis(movie) {
     axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&tomatoes=true&apikey=trilogy").then(
         function(response) {
@@ -107,7 +122,10 @@ function movieThis(movie) {
         console.log("No Results found. ");
   });
 }
+
 // <---------------------------------------------------->
+
+
 function doWhatItSays() {
   fs.readFile("random.txt", "utf8", function (err, data) {
     data = data.split(",");
